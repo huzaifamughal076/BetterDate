@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -137,8 +138,11 @@ public class LoginActivity extends AppCompatActivity {
                         JSONObject object1=new JSONObject(respons);
                         String userId=object1.getString("userid");
 
+                        SharedPreferences.Editor editor = getSharedPreferences("Questoins", MODE_PRIVATE).edit();
+                        editor.putString("userid", userId);
+                        editor.apply();
+
                         Intent i = new Intent(LoginActivity.this, HomeScreen.class);
-                        i.putExtra("UserId",userId);
                         startActivity(i);
                         finish();
 
