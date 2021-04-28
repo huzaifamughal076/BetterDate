@@ -128,19 +128,21 @@ public class LoginActivity extends AppCompatActivity {
                         username.setError("No such user Found");
                         return;
                     }
-                    if (status.equals("false")&& message.equals("Wrong Password")){
+                    if (status.equals("false") && message.equals("Wrong Password")) {
                         password.setError("Wrong Password");
                         return;
                     }
-                    if (status.equals("true")&& message.equals("SignIn Successfull")){
-                        String respons=object.getString("response");
+                    if (status.equals("true") && message.equals("SignIn Successfull")) {
+                        String respons = object.getString("response");
 
-                        JSONObject object1=new JSONObject(respons);
-                        String userId=object1.getString("userid");
+                        JSONObject object1 = new JSONObject(respons);
+                        String userId = object1.getString("userid");
 
                         SharedPreferences.Editor editor = getSharedPreferences("Questoins", MODE_PRIVATE).edit();
                         editor.putString("userid", userId);
                         editor.apply();
+
+
 
                         Intent i = new Intent(LoginActivity.this, HomeScreen.class);
                         startActivity(i);

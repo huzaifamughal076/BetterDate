@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -136,9 +137,6 @@ public class SignUpActivity extends AppCompatActivity {
                 } else {
                     signup(fullname,usernam,emailadress,phonenum,pass,dateofbirth,gender);
 
-                    Intent i = new Intent(SignUpActivity.this, SignupSuccessfullActivity.class);
-                    startActivity(i);
-                    finish();
                 }
             }
         });
@@ -165,15 +163,18 @@ public class SignUpActivity extends AppCompatActivity {
 
                     String status=object.getString("status");
                     String message= object.getString("message");
-                    String respons= object.getString("response");
+                    String userId= object.getString("userId");
 
-                    JSONObject object1=new JSONObject(respons);
-                    String userid=object1.getString("userid");
 
                     if (status.equals("true")){
-                        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+
+                        SharedPreferences.Editor editor = getSharedPreferences("Questoins", MODE_PRIVATE).edit();
+                        editor.putString("userid", userId);
+                        editor.apply();
+
+                    //    Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
                         Intent i=new Intent(SignUpActivity.this,SignupSuccessfullActivity.class);
-                        i.putExtra("userid",userid);
+                       // i.putExtra("userid",userId);
                         startActivity(i);
 
                     }

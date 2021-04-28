@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -261,6 +263,10 @@ public class SignupSuccessfullActivity extends AppCompatActivity {
         letsgetstarted = findViewById(R.id.letsgetstarted);
         thanks = findViewById(R.id.thanks);
 
+        SharedPreferences sharedPreferences = getSharedPreferences("Questoins", MODE_PRIVATE);
+        String userID = sharedPreferences.getString("userid", "");
+
+        Toast.makeText(getApplicationContext(),userID,Toast.LENGTH_LONG).show();
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -285,7 +291,9 @@ public class SignupSuccessfullActivity extends AppCompatActivity {
                 String Qu14 = sharedPreferences.getString("Q14", "");
                 String Qu15 = sharedPreferences.getString("Q15", "");
 
-                String userID = sharedPreferences.getString("userid", "");
+
+
+
 
                 //Uploading Questions to database:
 
@@ -301,12 +309,12 @@ public class SignupSuccessfullActivity extends AppCompatActivity {
                             String message = object.getString("message");
 
                             if (status.equals("true")) {
-                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-//                                Intent i = new Intent(SignupSuccessfullActivity.this, HomeScreen.class);
-//                                startActivity(i);
-//                                finish();
+                              //  Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                                Intent i = new Intent(SignupSuccessfullActivity.this, HomeScreen.class);
+                                startActivity(i);
+                                finish();
                             } else {
-                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), Qu1+ "\n"+Qu2+ "\n"+Qu3+ "\n"+Qu4+ "\n"+Qu5+ "\n"+Qu6+ "\n"+Qu7+ "\n"+Qu8+ "\n"+Qu9+ "\n"+Qu10+ "\n"+Qu11+ "\n"+Qu12+ "\n"+Qu13+ "\n"+Qu14+ "\n"+Qu15+ "\n", Toast.LENGTH_LONG).show();
                                 return;
                             }
                         } catch (JSONException e) {
@@ -338,12 +346,13 @@ public class SignupSuccessfullActivity extends AppCompatActivity {
                         params.put("q13", Qu13);
                         params.put("q14", Qu14);
                         params.put("q15", Qu15);
-                        params.put("userid", userID);
+                        params.put("userId", userID);
                         return params;
                     }
                 };
                 queue.add(request);
 
+               // uploadBitmap();
                 //TODO:Uploading picture and description
 
 
@@ -354,6 +363,7 @@ public class SignupSuccessfullActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 letsgetstarted.setVisibility(View.GONE);
+
 
                 q1main();
 
@@ -373,11 +383,7 @@ public class SignupSuccessfullActivity extends AppCompatActivity {
                     Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(i, 100);
                 }
-//                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-//                startActivityForResult(gallery, PICK_IMAGE);
-               // showFileChooser();
             }
-
 
 
         });
@@ -416,13 +422,14 @@ public class SignupSuccessfullActivity extends AppCompatActivity {
     private void uploadBitmap(final Bitmap bitmap) {
 
         //getting the tag from the edittext
-       // final String tags = editTextTags.getText().toString().trim();
+        // final String tags = editTextTags.getText().toString().trim();
         SharedPreferences sharedPreferences = getSharedPreferences("Questoins", MODE_PRIVATE);
         String userID = sharedPreferences.getString("userid", "");
 
-        Toast.makeText(getApplicationContext(),userID,Toast.LENGTH_LONG).show();
+        String url = "http://api.betterdate.info/endpoints/gallery.php";
 
-        String url="http://api.betterdate.info/endpoints/gallery.php";
+        ProgressDialog dialog = ProgressDialog.show(SignupSuccessfullActivity.this, "",
+                "Uploading Image. Please wait...", true);
 
         //our custom volley request
         VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, url,
@@ -430,8 +437,10 @@ public class SignupSuccessfullActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(NetworkResponse response) {
                         try {
+                           // Toast.makeText(getApplicationContext(), userID, Toast.LENGTH_LONG).show();
                             JSONObject obj = new JSONObject(new String(response.data));
                             Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -440,29 +449,26 @@ public class SignupSuccessfullActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        dialog.dismiss();
                         Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
-
-            /*
-             * Here we are passing image by renaming it with a unique name
-             * */
-            @Override
-            protected Map<String, DataPart> getByteData() {
-                Map<String, DataPart> params = new HashMap<>();
-                long imagename = System.currentTimeMillis();
-                params.put("galleryImage", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
-                return params;
-            }
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("userId", userID);
                 return params;
             }
-        };
 
-        //adding the request to volley
+            @Override
+            protected Map<String, DataPart> getByteData() {
+                Map<String, DataPart> params = new HashMap<>();
+                long imagename = System.currentTimeMillis();
+                params.put("userDp", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
+                return params;
+            }
+
+        };
         Volley.newRequestQueue(this).add(volleyMultipartRequest);
     }
 
@@ -693,7 +699,7 @@ public class SignupSuccessfullActivity extends AppCompatActivity {
 
                     otherspinner2.setVisibility(View.GONE);
 
-                    q1b = item2s;
+                    q2b = item2s;
 
                     new Handler().postDelayed(new Runnable() {
                         @Override
