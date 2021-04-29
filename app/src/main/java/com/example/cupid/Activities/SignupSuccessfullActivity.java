@@ -266,7 +266,7 @@ public class SignupSuccessfullActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("Questoins", MODE_PRIVATE);
         String userID = sharedPreferences.getString("userid", "");
 
-        Toast.makeText(getApplicationContext(),userID,Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), userID, Toast.LENGTH_LONG).show();
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -292,9 +292,6 @@ public class SignupSuccessfullActivity extends AppCompatActivity {
                 String Qu15 = sharedPreferences.getString("Q15", "");
 
 
-
-
-
                 //Uploading Questions to database:
 
                 String questions_url = "http://api.betterdate.info/endpoints/question.php";
@@ -309,12 +306,12 @@ public class SignupSuccessfullActivity extends AppCompatActivity {
                             String message = object.getString("message");
 
                             if (status.equals("true")) {
-                              //  Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                                //  Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                                 Intent i = new Intent(SignupSuccessfullActivity.this, HomeScreen.class);
                                 startActivity(i);
                                 finish();
                             } else {
-                                Toast.makeText(getApplicationContext(), Qu1+ "\n"+Qu2+ "\n"+Qu3+ "\n"+Qu4+ "\n"+Qu5+ "\n"+Qu6+ "\n"+Qu7+ "\n"+Qu8+ "\n"+Qu9+ "\n"+Qu10+ "\n"+Qu11+ "\n"+Qu12+ "\n"+Qu13+ "\n"+Qu14+ "\n"+Qu15+ "\n", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), Qu1 + "\n" + Qu2 + "\n" + Qu3 + "\n" + Qu4 + "\n" + Qu5 + "\n" + Qu6 + "\n" + Qu7 + "\n" + Qu8 + "\n" + Qu9 + "\n" + Qu10 + "\n" + Qu11 + "\n" + Qu12 + "\n" + Qu13 + "\n" + Qu14 + "\n" + Qu15 + "\n", Toast.LENGTH_LONG).show();
                                 return;
                             }
                         } catch (JSONException e) {
@@ -352,7 +349,28 @@ public class SignupSuccessfullActivity extends AppCompatActivity {
                 };
                 queue.add(request);
 
-               // uploadBitmap();
+                SharedPreferences.Editor editor = getSharedPreferences("Questoins", MODE_PRIVATE).edit();
+                editor.putString("Q1", "");
+                editor.putString("Q2", "");
+                editor.putString("Q3", "");
+                editor.putString("Q4", "");
+                editor.putString("Q5", "");
+
+                editor.putString("Q6", "");
+                editor.putString("Q7", "");
+                editor.putString("Q8", "");
+                editor.putString("Q9", "");
+                editor.putString("Q10", "");
+
+                editor.putString("Q11", "");
+                editor.putString("Q12", "");
+                editor.putString("Q13", "");
+                editor.putString("Q14", "");
+                editor.putString("Q15", "");
+
+                editor.apply();
+
+                // uploadBitmap();
                 //TODO:Uploading picture and description
 
 
@@ -437,10 +455,10 @@ public class SignupSuccessfullActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(NetworkResponse response) {
                         try {
-                           // Toast.makeText(getApplicationContext(), userID, Toast.LENGTH_LONG).show();
+                            // Toast.makeText(getApplicationContext(), userID, Toast.LENGTH_LONG).show();
                             JSONObject obj = new JSONObject(new String(response.data));
                             Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
+                            dialog.dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
