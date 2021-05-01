@@ -266,7 +266,7 @@ public class SignupSuccessfullActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("Questoins", MODE_PRIVATE);
         String userID = sharedPreferences.getString("userid", "");
 
-        Toast.makeText(getApplicationContext(), userID, Toast.LENGTH_LONG).show();
+       // Toast.makeText(getApplicationContext(), userID, Toast.LENGTH_LONG).show();
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override

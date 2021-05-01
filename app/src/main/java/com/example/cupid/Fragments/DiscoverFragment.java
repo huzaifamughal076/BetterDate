@@ -42,7 +42,7 @@ public class DiscoverFragment extends Fragment {
     private int currentPosition;
     private View See_full_profile;
 
-    int counter;
+    int counter=0;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -98,7 +98,7 @@ public class DiscoverFragment extends Fragment {
         setCardStackAdapter();
         currentPosition = 0;
 
-        counter = 0;
+
 
 
         //Handling swipe event of Cards stack
@@ -118,8 +118,13 @@ public class DiscoverFragment extends Fragment {
             @Override
             public void onStackEmpty() {
                // Toast.makeText(getContext(), "No more users found", Toast.LENGTH_LONG).show();
-                if (counter > 1)
+
+                if (counter == 1 ) {
+                    See_full_profile.setVisibility(View.VISIBLE);
+                }
+                else {
                     See_full_profile.setVisibility(View.GONE);
+                }
             }
 
 
@@ -173,7 +178,7 @@ public class DiscoverFragment extends Fragment {
                         }
                         String[] dateofBirth = dob.split("/");
 
-                        String age = "Age : " + getAge(Integer.parseInt(dateofBirth[2]), Integer.parseInt(dateofBirth[1]), Integer.parseInt(dateofBirth[0]));
+                        String age = getAge(Integer.parseInt(dateofBirth[2]), Integer.parseInt(dateofBirth[1]), Integer.parseInt(dateofBirth[0]));
 
                         String dp_url = "http://api.betterdate.info/gallery/" + dp;
 
