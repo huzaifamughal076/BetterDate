@@ -7,23 +7,35 @@ import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.cupid.Model.CardItem;
+import com.example.cupid.Model.CardItem_test;
 import com.example.cupid.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class CardsAdapter extends BaseAdapter {
 
+    private static AdapterView.OnItemClickListener mClickListener;
+
     private Activity activity;
     private final static int AVATAR_WIDTH = 150;
     private final static int AVATAR_HEIGHT = 300;
-    private List<CardItem> data;
+    private List<CardItem_test> data;
 
-    public CardsAdapter(Activity activity, List<CardItem> data) {
+    void setOnItemClickListener(AdapterView.OnItemClickListener itemClickListener) {
+        mClickListener = itemClickListener;
+    }
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+
+    public CardsAdapter(Activity activity, List<CardItem_test> data) {
         this.data = data;
         this.activity = activity;
     }
@@ -34,9 +46,10 @@ public class CardsAdapter extends BaseAdapter {
     }
 
     @Override
-    public CardItem getItem(int position) {
+    public CardItem_test getItem(int position) {
         return data.get(position);
     }
+
 
     @Override
     public long getItemId(int position) {
@@ -62,59 +75,33 @@ public class CardsAdapter extends BaseAdapter {
 
         //setting data to views
         holder.name.setText(getItem(position).getName());
-        holder.location.setText(getItem(position).getLocation());
-        holder.avatar.setImageBitmap(decodeSampledBitmapFromResource(activity.getResources(),
-                getItem(position).getDrawableId(), AVATAR_WIDTH, AVATAR_HEIGHT));
+        holder.age.setText(getItem(position).getAge());
+        holder.description.setText(getItem(position).getDescription());
+
+        Picasso.get().load(getItem(position).getDp()).placeholder(R.drawable.download).into(holder.avatar);
+
 
         return convertView;
     }
 
-    private class ViewHolder{
+    private class ViewHolder {
         private ImageView avatar;
         private TextView name;
-        private TextView location;
+        private TextView age;
+        private TextView description;
+        private TextView see_full_profile;
 
         public ViewHolder(View view) {
-            avatar = (ImageView)view.findViewById(R.id.avatar);
-            name = (TextView)view.findViewById(R.id.name);
-            location = (TextView)view.findViewById(R.id.location);
+            avatar = (ImageView) view.findViewById(R.id.avatar);
+            name = (TextView) view.findViewById(R.id.name);
+            age = (TextView) view.findViewById(R.id.age);
+            description = view.findViewById(R.id.description);
+            see_full_profile = view.findViewById(R.id.See_Full_Profile);
+
+
+
         }
     }
 
-    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId, int reqWidth, int reqHeight) {
 
-        // First decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(res, resId, options);
-
-        // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeResource(res, resId, options);
-    }
-
-    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
-
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) >= reqHeight
-                    && (halfWidth / inSampleSize) >= reqWidth) {
-                inSampleSize *= 2;
-            }
-        }
-
-        return inSampleSize;
-    }
 }
