@@ -70,7 +70,7 @@ public class FullProfileActivity extends AppCompatActivity {
                       //  Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
 
                         String[] dateofBirth = dob.split("/");
-                        String age = "Age : " + getAge(Integer.parseInt(dateofBirth[2]), Integer.parseInt(dateofBirth[1]), Integer.parseInt(dateofBirth[0]));
+                        String age = getAge(Integer.parseInt(dateofBirth[2]), Integer.parseInt(dateofBirth[1]), Integer.parseInt(dateofBirth[0]));
                         String dp_url = "http://api.betterdate.info/gallery/" + userDp;
 
                         match_name.setText(name);

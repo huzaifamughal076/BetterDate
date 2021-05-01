@@ -1,6 +1,7 @@
 package com.example.cupid.Fragments;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,12 +9,15 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.cupid.Activities.FullProfileActivity;
 import com.example.cupid.Adapter.CardsAdapter;
@@ -26,8 +30,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import link.fls.swipestack.SwipeStack;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,7 +50,7 @@ public class DiscoverFragment extends Fragment {
     private int currentPosition;
     private View See_full_profile;
 
-    int counter=0;
+    int counter = 0;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -98,7 +106,8 @@ public class DiscoverFragment extends Fragment {
         setCardStackAdapter();
         currentPosition = 0;
 
-
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("Questoins", MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userid", "");
 
 
         //Handling swipe event of Cards stack
@@ -111,18 +120,47 @@ public class DiscoverFragment extends Fragment {
 
             @Override
             public void onViewSwipedToRight(int position) {
+
+                CardItem_test cardItem_test = cardsAdapter.getItem(position);
+
+                String right_swiped_id = cardItem_test.getId();
+
+                RequestQueue queue = Volley.newRequestQueue(getContext());
+
+                String url = "http://api.betterdate.info/endpoints/like.php";
+
+                StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(getContext(), "Added to liked matches", Toast.LENGTH_LONG).show();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(), "Failed to like match", Toast.LENGTH_LONG).show();
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("userId", userId);
+                        params.put("likedId", right_swiped_id);
+                        return params;
+                    }
+                };
+                queue.add(request);
+
                 currentPosition = position + 1;
                 counter++;
             }
 
             @Override
             public void onStackEmpty() {
-               // Toast.makeText(getContext(), "No more users found", Toast.LENGTH_LONG).show();
+                // Toast.makeText(getContext(), "No more users found", Toast.LENGTH_LONG).show();
 
-                if (counter == 1 ) {
+                if (counter == 1) {
                     See_full_profile.setVisibility(View.VISIBLE);
-                }
-                else {
+                } else {
                     See_full_profile.setVisibility(View.GONE);
                 }
             }
@@ -153,6 +191,9 @@ public class DiscoverFragment extends Fragment {
         String url = "http://api.betterdate.info/endpoints/user.php";
         RequestQueue queue = Volley.newRequestQueue(getContext());
 
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("Questoins", MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userid", "");
+
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -182,9 +223,10 @@ public class DiscoverFragment extends Fragment {
 
                         String dp_url = "http://api.betterdate.info/gallery/" + dp;
 
+                        if (!id.equals(userId)) {
 
-                        cardItems.add(new CardItem_test(id, desc, dp_url, name, age));
-
+                            cardItems.add(new CardItem_test(id, desc, dp_url, name, age));
+                        }
                         //  Toast.makeText(getContext(), dp_url, Toast.LENGTH_LONG).show();
 
 

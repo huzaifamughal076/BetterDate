@@ -68,7 +68,6 @@
                     android:id="@+id/match_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Natasha"
                     android:textColor="@color/black"
                     android:textSize="28sp"
                     android:textStyle="bold" />
@@ -77,7 +76,6 @@
                     android:id="@+id/match_age"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Chandigarh, India"
                     android:textColor="#6A6A6A"
                     android:textSize="15sp" />
 
