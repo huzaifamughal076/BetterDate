@@ -134,7 +134,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Privicy"
+                    android:text="Privacy"
                     android:textColor="#6C6868"
                     android:textSize="15sp"
                     android:padding="10dp"
@@ -327,9 +327,10 @@
                     android:padding="10dp"/>
 
                 <TextView
+                    android:id="@+id/settings_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="UserName"
+                    android:text="Hayaat"
                     android:layout_alignParentRight="true"
                     android:textSize="15sp"
                     android:padding="10dp"

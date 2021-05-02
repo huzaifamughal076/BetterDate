@@ -80,8 +80,8 @@ public class SignupSuccessfullActivity extends AppCompatActivity {
     String[] Q3spinner = {"Extremely important", "Somewhat imporatant", "Not very important", "Not important at all"};
     String[] Q3otherspinner = {"Extremely important", "Somewhat imporatant", "Not very important", "Not important at all"};
 
-    String[] Q4spinner = {"Absolutely", "No way", "Get arried yes, settle down no", "Get married no, settle down yes"};
-    String[] Q4otherspinner = {"Absolutely", "No way", "Get arried yes, settle down no", "Get married no, settle down yes"};
+    String[] Q4spinner = {"Absolutely", "No way", "Get married yes, settle down no", "Get married no, settle down yes"};
+    String[] Q4otherspinner = {"Absolutely", "No way", "Get married yes, settle down no", "Get married no, settle down yes"};
 
     String[] Q5spinner = {"Yes", "No"};
     String[] Q5otherspinner = {"Yes", "No"};
@@ -89,17 +89,18 @@ public class SignupSuccessfullActivity extends AppCompatActivity {
     String[] Q6spinner = {"Yes, it's not a problem for me", "Yes, if I thought the debt were justified", "No"};
     String[] Q6otherspinner = {"Yes, it's not a problem for me", "Yes, if I thought the debt were justified", "No"};
 
-    String[] Q7spinner = {"Liberal / Left", "Centrist", "Consevative / Right", "Other"};
-    String[] Q7otherspinner = {"Liberal / Left", "Centrist", "Consevative / Right", "Other"};
 
-    String[] Q8spinner = {"Liberal / Left", "Centrist", "Consevative / Right", "Other"};
-    String[] Q8otherspinner = {"Liberal / Left", "Centrist", "Consevative / Right", "Other"};
+    String[] Q7spinner = {"Yes", "No"};
+    String[] Q7otherspinner = {"Yes", "No"};
+
+    String[] Q8spinner = {"Yes", "No", "Rarely"};
+    String[] Q8otherspinner = {"Yes", "No", "Rarely"};
 
     String[] Q9spinner = {"Liberal / Left", "Centrist", "Consevative / Right", "Other"};
     String[] Q9otherspinner = {"Liberal / Left", "Centrist", "Consevative / Right", "Other"};
 
-    String[] Q10spinner = {"Kissing inParis", "Kissing in the tent,in woods"};
-    String[] Q10otherspinner = {"Kissing inParis", "Kissing in the tent,in woods"};
+    String[] Q10spinner = {"Kissing in Paris", "Kissing in the tent,in woods"};
+    String[] Q10otherspinner = {"Kissing in Paris", "Kissing in the tent,in woods"};
 
     String[] Q11spinner = {"Yes", "No"};
     String[] Q11otherspinner = {"Yes", "No"};
@@ -266,7 +267,7 @@ public class SignupSuccessfullActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("Questoins", MODE_PRIVATE);
         String userID = sharedPreferences.getString("userid", "");
 
-       // Toast.makeText(getApplicationContext(), userID, Toast.LENGTH_LONG).show();
+        // Toast.makeText(getApplicationContext(), userID, Toast.LENGTH_LONG).show();
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -333,16 +334,19 @@ public class SignupSuccessfullActivity extends AppCompatActivity {
                         params.put("q3", Qu3);
                         params.put("q4", Qu4);
                         params.put("q5", Qu5);
+
                         params.put("q6", Qu6);
                         params.put("q7", Qu7);
                         params.put("q8", Qu8);
                         params.put("q9", Qu9);
                         params.put("q10", Qu10);
+
                         params.put("q11", Qu11);
                         params.put("q12", Qu12);
                         params.put("q13", Qu13);
                         params.put("q14", Qu14);
                         params.put("q15", Qu15);
+
                         params.put("userId", userID);
                         return params;
                     }
@@ -394,7 +398,8 @@ public class SignupSuccessfullActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+                {
                     ActivityCompat.requestPermissions(SignupSuccessfullActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
                 } else {
                     //TODO: sending image to server:
@@ -433,6 +438,7 @@ public class SignupSuccessfullActivity extends AppCompatActivity {
 
     public byte[] getFileDataFromDrawable(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
         bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
         return byteArrayOutputStream.toByteArray();
     }

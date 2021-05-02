@@ -17,8 +17,6 @@
 
 
 
-
-
     <LinearLayout
         android:id="@+id/letsgetstarted"
         android:layout_width="match_parent"
@@ -85,6 +83,8 @@
 
     </LinearLayout>
 
+
+
     <LinearLayout
         android:id="@+id/Q1main"
         android:layout_width="match_parent"
@@ -141,7 +141,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="About how long do you want your \nnext relatinship to last?"
+            android:text="About how long do you want your \next relationship to last?"
             android:textColor="#686565"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -626,7 +626,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Are you ready to settledown and get \nmarried rightnow?"
+            android:text="Are you ready to settle down and get \nmarried right now?"
             android:textColor="#686565"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -787,7 +787,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Do you enjoy discussing politics"
+            android:text="Do you enjoy discussing politics?"
             android:textColor="#686565"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -950,7 +950,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Would you date someone who was in considerable debit?"
+            android:text="Would you date someone who was in considerable debt?"
             android:textColor="#686565"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -1110,7 +1110,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Which best describes your political beliefs?"
+            android:text="Is an astrological sign at all important in a match?"
             android:textColor="#686565"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -1274,7 +1274,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Which best describes your political beliefs?"
+            android:text="Do you smoke?"
             android:textColor="#686565"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -2079,7 +2079,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Do you often find yourself worring\nabout things that you have no\ncontrol over?"
+            android:text="Do you often find yourself worrying\nabout things that you have no\ncontrol over?"
             android:textColor="#686565"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -2523,7 +2523,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Setting up profile successful."
+                android:text="Setting up profile successfully."
                 android:textColor="@color/black"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -2593,7 +2593,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:text="Upload your profile"/>
+                    android:text="Upload your profile picture"/>
 
 
             </LinearLayout>
@@ -2602,9 +2602,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:orientation="vertical">
 
-                android:orientation="vertical"
-                >
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

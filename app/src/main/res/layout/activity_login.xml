@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textSize="20sp"
-        android:hint="Email/Username"
+        android:hint="Email / Username"
         android:padding="8dp"
         android:textColorHint="#716F6F"
         android:textColor="@color/black"

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".Activities.EditImages">
 
     <LinearLayout
@@ -16,7 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Select Multiple Images"
+            android:text="Add Multiple Images"
             android:textSize="20sp"
             android:textColor="@color/black"
             android:layout_gravity="center"
@@ -147,16 +148,14 @@
 
             <ImageButton
                 android:id="@+id/edit_img_float_btn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_gravity="end|bottom"
                 android:src="@drawable/ic_baseline_add_24"
-                android:layout_margin="15dp"
+                android:layout_margin="25dp"
                 android:textColor="@color/white"
-
                 android:gravity="center"
-                android:background="@drawable/floatingbuttonshape"
-                />
+                android:background="@drawable/floatingbuttonshape"/>
 
 
         </FrameLayout>

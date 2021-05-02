@@ -165,7 +165,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.7"
+                    android:layout_weight="0.6"
                     android:layout_marginLeft="5dp"
                     android:gravity="center_vertical">
 
@@ -189,6 +189,7 @@
                         android:id="@+id/radiogroup"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:gravity="right"
                         android:orientation="horizontal">
 
                         <RadioButton
@@ -247,7 +248,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="#00000000"
-            android:elevation="2dp"
+            android:elevation="5dp"
             android:text="Already Have An Account"
             android:textColor="@color/black" />
 
